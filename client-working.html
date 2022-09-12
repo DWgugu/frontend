@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>ZIPY</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="#" class="navbar-brand mx-4 mb-3">
+                    <img class="logo" src="./img/logo.svg" alt="">
+                </a>
+                
+                <div class="navbar-nav w-100">
+                    <a href="home.html" class="nav-item nav-link active"><i class="fa fa-home me-2"></i>Home</a>
+                    <a href="cliente.html" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Cliente</a>
+                    <a href="servico.html" class="nav-item nav-link"><i class="fa fa-hammer me-2"></i>Serviço</a>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="d-none d-lg-inline-flex" id="userLogged"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">Perfil</a>
+                            <a href="#" class="dropdown-item" onclick="logout()">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <main class="container-fluid pt-4 px-4">
+                <h3 id="cutDateTitle"></h3>
+                <div class="col-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <button class="btn btn-add" onclick="back()" >VOLTAR</button>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table" id="tableClientWorking">
+                                <thead>
+                                    <tr>
+                                        <th class="col-6">CLIENTE</th>
+                                        <th class="col-3">QUANTIDADE TOTAL</th>
+                                        <th class="col-3">VALOR TOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyClientWorking">
+                                    <tr>
+                                        <td id="infoClient"></td>
+                                        <td id="infoQuantity"></td>
+                                        <td id="infoValue"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-inputs">
+                            <div class="section-inputs">
+                                <div class="card-item">
+                                    <label for="">Data do Trabalho</label>
+                                    <input id="date" type="date">
+                                </div>
+                                <div class="card-item">
+                                    <label for="">Quantidade</label>
+                                    <input id="quantity" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="6">
+                                </div>
+                            </div>
+                            <div class="section-inputs">
+                                <div class="card-item">
+                                    <label for="">Serviço</label>
+                                    <div class="dropdown">
+                                        <a class="btn dropdown-toggle dropdown-service" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Selecione
+                                        </a>
+                                    
+                                        <ul class="dropdown-menu " id="drop-service">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-item">
+                                    <label for="">Serviço selecionado:</label>
+                                    <p id="serviceSelected">Nenhum serviço selecionado</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class=" btn button" onclick="addWorked()">SALVAR</button>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table" id="tableDateWorking">
+                                <thead>
+                                    <tr>
+                                        <th class="col-3">DATA</th>
+                                        <th class="col-3">SERVIÇO</th>
+                                        <th class="col-3">QUANTIDADE</th>
+                                        <th class="col-3">VALOR</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyDateWorking">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!-- Content End -->
+
+        <div id="alerts" class="alert-user">
+
+        </div>
+
+
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script src="./js/client-working.js"></script>
+</body>
+
+</html>
